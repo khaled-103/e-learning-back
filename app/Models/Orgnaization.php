@@ -21,7 +21,9 @@ class Orgnaization extends Model
         'password',
 
     ];
-
+    protected $hidden = [
+        'password',
+    ];
     public function country()
     {
         return $this->belongsTo(Country::class);

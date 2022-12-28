@@ -4,96 +4,86 @@ namespace App\Http\Controllers\Orgnaiztion\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Orgnaization;
-use App\Models\PersonalToken;
+use App\Traits\AuthTrait;
+use App\Traits\GeneralTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class AuthOrgController extends Controller
 {
-    public function register(Request $request)
-    {
-        $Validator = Validator::make($request->all(), [
-            'name' => [ 'required','string', 'min:2', 'max:50', 'unique:orgnaizations,name'],
-            'username' => [ 'required','string', 'unique:orgnaizations,username', 'min:5', 'max:10'],
-            'email' => ['email', 'required', 'unique:orgnaizations,email'],
-            'password' => [ 'required','string','min:8', 'confirmed'],
-            'phone' => ['required', 'numeric', 'unique:orgnaizations,phone']
+    use GeneralTrait;
+    use AuthTrait;
+    public function checkVerifyCode(Request $request){
+        return $this->generalCheckVerifyCode($request,'orgnaization');
+    }
+
+    public function resetPassword(Request $request){
+        $res = $this->generalCheckVerifyCode($request,'orgnaization');
+        if(!$res->getData()->status){
+            return $res;
+        }
+        $Validator = Validator::make($request->all(),[
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
         if ($Validator->fails()) {
-            return $this->failResponse($Validator->errors(),422);
+            return $this->returnValidationError('validation error occur', $Validator->errors(), 422);
         }
-        $orgnaization = Orgnaization::create(
-            [
-                'name' => $request->name,
-                'username' => $request->username,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'phone' => $request->phone,
-            ]
-        );
-        return $this->successResponse($orgnaization);
+        $user = Orgnaization::where('email',$request->email)->first();
+        if($user){
+            $user->update(['password' => Hash::make($request->password)]);
+            return $this->returnSuccessMessage("Reset password Success");
+        }
+        return $this->returnError(429,'Something error occur');
+    }
+
+    public function sendCodeToEmail(Request $request){
+        $Validator = Validator::make($request->all(),[
+            'email' => 'required|email'
+        ]);
+        if ($Validator->fails()) {
+            return $this->returnValidationError('validation error occur', $Validator->errors(), 422);
+        }
+        $user = Orgnaization::where('email',$request->email)->first();
+        if(!$user){
+            return $this->returnError(429,"Your Email does not Exist. enter correct email");
+        }
+        return $this->sendCode($request,'orgnaization');
+    }
+
+    public function sendVerifyEmail(Request $request){
+        $validate =[
+            'name' => ['required', 'string', 'min:2', 'max:50', 'unique:orgnaizations,name'],
+            'username' => ['required', 'string', 'unique:orgnaizations,username', 'min:5', 'max:10'],
+            'email' => ['email', 'required', 'unique:orgnaizations,email'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'phone' => ['required', 'numeric']
+        ];
+        return $this->generalSendVerifyEmail($request,$validate,'orgnaization');
+    }
+    public function register(Request $request)
+    {
+        $createData = [
+            'name' => $request->name,
+            'username' => $request->username,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'phone' => $request->phone,
+        ];
+        $regValidate = [
+            'name' => ['required', 'string', 'min:2', 'max:50', 'unique:orgnaizations,name'],
+            'username' => ['required', 'string', 'unique:orgnaizations,username', 'min:5', 'max:10'],
+            'email' => ['email', 'required', 'unique:orgnaizations,email'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'phone' => ['required', 'numeric']
+        ];
+        return $this->generalRegister($request, $regValidate, $createData, 'orgnaization');
     }
 
     public function login(Request $request)
     {
-        $Validator = Validator::make($request->all(), [
-            'username' => ['required','string'],
-            'password' => ['required','string'],
-        ]);
-        if ($Validator->fails()) {
-            return $this->failResponse($Validator->errors(),422);
-        }
-        $orgnaization = Orgnaization::where('username', $request->username)->orWhere('email', $request->username)->first();
-        if ($orgnaization) {
-            if (Hash::check($request->password, $orgnaization->password)) {
-                return $this->successResponse($orgnaization);
-            } else {
-                return $this->failResponse(['password' => ['Invalid password']], 422);
-            }
-        } else {
-            return $this->failResponse(['username' => ['Invalid username or email']], 422);
-        }
-    }
-
-    public function logout(Request $request){
-        $token = PersonalToken::findOrFail($request->token['id']);
-        $token->delete();
-        return response()->json([
-            'status' => true,
-            'message' => 'Logout successful',
-        ]);
+        return $this->generalLogin($request, 'orgnaization');
     }
 
 
-    protected function generateToken($id)
-    {
-        $token = fake()->uuid();
-        $hashToken = Hash::make($token);
-        $tokenInfo = PersonalToken::create([
-            'tokenable_type' => 'orgnaization',
-            'tokenable_id' => $id,
-            'token' => $hashToken
-        ]);
-        $tokenInfo['returnedToken'] = $token;
-        return $tokenInfo;
-    }
-
-    private function successResponse($orgnaization)
-    {
-        $token = $this->generateToken($orgnaization->id);
-        return response()->json([
-            'message' => 'success',
-            'orgnaization' => $orgnaization,
-            'token' => $token,
-            'code' => 200
-        ]);
-    }
-    private function failResponse($message, $errorCode)
-    {
-        return response()->json([
-            'message' => $message,
-            'code' => $errorCode
-        ]);
-    }
 }
