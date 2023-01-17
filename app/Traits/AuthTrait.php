@@ -14,7 +14,8 @@ trait AuthTrait
 {
 
 
-    public function generalCheckVerifyCode(Request $request,$type){
+    public function generalCheckVerifyCode(Request $request, $type)
+    {
         $Validator = Validator::make($request->all(), [
             'email' => ['email', 'required', 'exists:verification_codes,email'],
             'code' => ['required'],
@@ -22,34 +23,36 @@ trait AuthTrait
         if ($Validator->fails()) {
             return $this->returnValidationError('validation error occur', $Validator->errors(), 422);
         }
-        $res = verificationCode::where('email',$request->email)->where('type',$type)->first();
-        if($res){
-            if(Hash::check($request->code,$res->code))
+        $res = verificationCode::where('email', $request->email)->where('type', $type)->first();
+        if ($res) {
+            if (Hash::check($request->code, $res->code))
                 return $this->returnSuccessMessage('correct code');
         }
-        return $this->returnError(429,'inCorrect code');
+        return $this->returnError(429, 'inCorrect code');
     }
 
-    public function generalSendVerifyEmail(Request $request,$validate,$type){
-        $Validator = Validator::make($request->all(),$validate);
+    public function generalSendVerifyEmail(Request $request, $validate, $type)
+    {
+        $Validator = Validator::make($request->all(), $validate);
         if ($Validator->fails()) {
             return $this->returnValidationError('validation error occur', $Validator->errors(), 422);
         }
-        return $this->sendCode($request,$type);
+        return $this->sendCode($request, $type);
     }
-    public function sendCode(Request $request,$type){
+    public function sendCode(Request $request, $type)
+    {
         $code = $this->creatCode();
-        $data = ['subject' => 'verfiy email' , 'view' => 'verfiyEmail' , 'data' => ['code' =>  $code]];
-        $res = $this->sendEmail($request,$data);
-        if($res->getData()->status){
-            $gUser = verificationCode::where('email',$request->email)->where('type',$type)->first();
-            if(!$gUser){
+        $data = ['subject' => 'verfiy email', 'view' => 'verfiyEmail', 'data' => ['code' =>  $code]];
+        $res = $this->sendEmail($request, $data);
+        if ($res->getData()->status) {
+            $gUser = verificationCode::where('email', $request->email)->where('type', $type)->first();
+            if (!$gUser) {
                 verificationCode::create([
                     'email' => $request->email,
                     'code' => Hash::make($code),
                     'type' => $type
                 ]);
-            }else{
+            } else {
                 $gUser->update(['code' => Hash::make($code)]);
             }
         }
@@ -80,7 +83,7 @@ trait AuthTrait
 
         if ($gUser) {
             if (Hash::check($request->password, $gUser->password)) {
-                return $this->returnData('data', [$type => $gUser, 'token' => $this->generateToken($gUser->id)], 'login succcessfuly');
+                return $this->returnData('data', [$type => $gUser, 'token' => $this->generateToken($gUser->id, $type)], 'login succcessfuly');
             } else {
                 return $this->returnValidationError('validation error occur', ['password' => ['Invalid password']], 422);
             }
@@ -93,26 +96,35 @@ trait AuthTrait
     {
         $Validator = Validator::make($request->all(), $regValidate);
         if ($Validator->fails()) {
-            return $this->returnError(429,'something wrong !!');
+            return $this->returnError(429, 'something wrong !!');
             // return $this->returnValidationError('validation error occur', $Validator->errors(), 422);
         }
         $gUser = null;
         if ($type == 'user') {
             $gUser = User::create($createData);
-        }else if($type == 'orgnaization'){
+        } else if ($type == 'orgnaization') {
             $gUser = Orgnaization::create($createData);
         }
-        return $this->returnData('data', [$type => $gUser, 'token' => $this->generateToken($gUser->id)], 'new register succcessfuly');
+        return $this->returnData('data', [$type => $gUser, 'token' => $this->generateToken($gUser->id, $type)], 'new register succcessfuly');
     }
-    protected function generateToken($id)
+    protected function generateToken($id, $type)
     {
         $token = fake()->uuid();
         $hashToken = Hash::make($token);
-        $tokenInfo = PersonalToken::create([
-            'tokenable_type' => 'orgnaization',
-            'tokenable_id' => $id,
-            'token' => $hashToken
-        ]);
+        $tokenInfo = PersonalToken::where('tokenable_id', $id)
+            ->where('tokenable_type', $type)
+            ->first();
+        if ($tokenInfo) {
+            $tokenInfo->update([
+                'token' => $hashToken
+            ]);
+        } else {
+            $tokenInfo = PersonalToken::create([
+                'tokenable_type' => $type,
+                'tokenable_id' => $id,
+                'token' => $hashToken
+            ]);
+        }
         $tokenInfo['returnedToken'] = $token;
         return $tokenInfo;
     }

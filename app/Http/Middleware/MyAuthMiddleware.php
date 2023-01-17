@@ -18,7 +18,7 @@ class MyAuthMiddleware
      */
     public function handle(Request $request, Closure $next ,String $type)
     {
-        if($request->has('token')){
+        if($request->has('token') && $request->token){
             if($request->token['tokenable_type'] == $type){
                 $res = $this->checkTokenInfo($request);
                 if($res->getData()->status){
@@ -26,6 +26,6 @@ class MyAuthMiddleware
                 }
             }
         }
-        return $this->returnError(422,'token erorr !!');
+        return $this->returnError(422,'Not Authenticate !!');
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\Orgnaiztion\Auth\AuthOrgController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,15 +32,23 @@ Route::middleware('checkPassword')->group(function () {
     Route::post('/user/sendCodeToEmail',[AuthController::class,'sendCodeToEmail']);
     Route::post('/user/resetPassword',[AuthController::class,'resetPassword']);
 
+
     Route::post('/orgnaization/sendVerifyEmail', [AuthOrgController::class, 'sendVerifyEmail'])->middleware('throttle:3');
     Route::post('/orgnaization/checkVerifyCode',[AuthOrgController::class,'checkVerifyCode']);
     Route::post('/orgnaization/register', [AuthOrgController::class, 'register']);
     Route::post('/orgnaization/login', [AuthOrgController::class, 'login']);
     Route::post('/orgnaization/sendCodeToEmail',[AuthOrgController::class,'sendCodeToEmail']);
     Route::post('/orgnaization/resetPassword',[AuthOrgController::class,'resetPassword']);
+    Route::post('/orgnaization/createCourse',[CourseController::class,'store'])->middleware('MyAuth:orgnaization');
+    Route::post('/orgnaization/allCourses',[CourseController::class,'getOrgnaizationCourses'])->middleware('MyAuth:orgnaization');
+    Route::post('/orgnaization/get-course-info',[CourseController::class,'getCourseInfo'])->middleware('MyAuth:orgnaization');
 
 
+    Route::post('/getLanguages',[CourseController::class,'getLanguages']);
+    Route::post('/getCategories',[CourseController::class,'getCategories']);
 });
+
+
 
 Route::post('/testEmail',[AuthController::class,'testEmail']);
 // Route::post('/logout',[AuthOrgController::class,'logout']);
