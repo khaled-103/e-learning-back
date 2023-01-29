@@ -19,7 +19,8 @@ class Orgnaization extends Model
         'city_id',
         'subscriptions',
         'password',
-
+        'description',
+        'image'
     ];
     protected $hidden = [
         'password',
@@ -32,5 +33,8 @@ class Orgnaization extends Model
     public function city()
     {
         return $this->belongsTo(City::class);
+    }
+    public function getImageAttribute(){
+        return asset('uploads/images/org/'.$this->attributes['image']);
     }
 }

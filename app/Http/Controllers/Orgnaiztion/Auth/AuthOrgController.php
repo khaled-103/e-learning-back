@@ -69,13 +69,15 @@ class AuthOrgController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'phone' => $request->phone,
+            'country_id' => $request->country
         ];
         $regValidate = [
             'name' => ['required', 'string', 'min:2', 'max:50', 'unique:orgnaizations,name'],
             'username' => ['required', 'string', 'unique:orgnaizations,username', 'min:5', 'max:10'],
             'email' => ['email', 'required', 'unique:orgnaizations,email'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'phone' => ['required', 'numeric']
+            'phone' => ['required', 'numeric'],
+            'country' => 'required'
         ];
         return $this->generalRegister($request, $regValidate, $createData, 'orgnaization');
     }

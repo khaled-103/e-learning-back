@@ -43,6 +43,28 @@ return [
             'visibility' => 'public',
             'throw' => false,
         ],
+        'uploads' => [
+            'driver' => 'local',
+            'root' => public_path('uploads/images/org'),
+            'url' => env('APP_URL').'/uploads/images/org/',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+        'Video_lecture' =>[
+            'driver' => 'local',
+            'root' => public_path('video_lecture'),
+            'url' => env('APP_URL').'/video_lecture',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
+        'Attachment_lecture'=>[
+            'driver' => 'local',
+            'root' => public_path('attachment_lecture'),
+            'url' => env('APP_URL').'/attachment_lecture',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
 
         's3' => [
             'driver' => 's3',

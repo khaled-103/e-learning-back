@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Request;
 
 class Course extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    protected $hidden = ['pivot'];
 
     public function category()
     {
@@ -33,5 +35,12 @@ class Course extends Model
     public function status()
     {
         return $this->hasOne(Status::class);
+    }
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'course_tags');
+    }
+    public function getImageAttribute(){
+        return asset('uploads/images/org/courses/'.$this->attributes['image']);
     }
 }

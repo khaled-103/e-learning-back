@@ -16,16 +16,17 @@ class MyAuthMiddleware
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next ,String $type)
+    public function handle(Request $request, Closure $next, String $type)
     {
-        if($request->has('token') && $request->token){
-            if($request->token['tokenable_type'] == $type){
+
+        if ($request->has('token') && $request->token) {
+            if (is_array($request->token) ? $request->token['tokenable_type'] : json_decode($request->token)->tokenable_type == $type) {
                 $res = $this->checkTokenInfo($request);
-                if($res->getData()->status){
+                if ($res->getData()->status) {
                     return $next($request);
                 }
             }
         }
-        return $this->returnError(422,'Not Authenticate !!');
+        return $this->returnError(422, 'Not Authenticate !!');
     }
 }

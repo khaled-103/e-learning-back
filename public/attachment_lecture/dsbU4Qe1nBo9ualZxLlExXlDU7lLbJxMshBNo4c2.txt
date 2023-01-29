@@ -1,0 +1,284 @@
+1
+00:00:02,400 --> 00:00:04,360
+It's also worth mentioning
+
+2
+00:00:04,360 --> 00:00:06,910
+that we have alternatives to Vue.
+
+3
+00:00:06,910 --> 00:00:09,970
+Vue.js of course, is the focus of this course
+
+4
+00:00:09,970 --> 00:00:12,420
+and here we will learn all about Vue.
+
+5
+00:00:12,420 --> 00:00:13,780
+Vue will turn out to be
+
+6
+00:00:13,780 --> 00:00:17,290
+a complete component-based UI framework.
+
+7
+00:00:17,290 --> 00:00:19,920
+And you will learn what component-based means
+
+8
+00:00:19,920 --> 00:00:21,820
+throughout the course, no worries.
+
+9
+00:00:21,820 --> 00:00:23,640
+And it's a framework that includes
+
+10
+00:00:23,640 --> 00:00:25,990
+basically all core features you need
+
+11
+00:00:25,990 --> 00:00:28,640
+to build modern web applications.
+
+12
+00:00:28,640 --> 00:00:31,210
+Now you already see that it has one downside,
+
+13
+00:00:31,210 --> 00:00:33,560
+and that is that it's a bit less popular
+
+14
+00:00:33,560 --> 00:00:35,630
+than React and Angular.
+
+15
+00:00:35,630 --> 00:00:37,920
+Now we'll get back to the downside in a second.
+
+16
+00:00:37,920 --> 00:00:41,020
+But of course, the first important question is,
+
+17
+00:00:41,020 --> 00:00:43,810
+what is React and what is Angular?
+
+18
+00:00:43,810 --> 00:00:46,810
+Well, React is one Alternative to Vue.
+
+19
+00:00:46,810 --> 00:00:49,510
+It's basically also a JavaScript framework,
+
+20
+00:00:49,510 --> 00:00:51,560
+though officially, it's just a library
+
+21
+00:00:51,560 --> 00:00:54,910
+because it has less features than Vue actually.
+
+22
+00:00:54,910 --> 00:00:57,400
+It only focuses on rendering UIs
+
+23
+00:00:57,400 --> 00:01:00,100
+and it misses some features like routing
+
+24
+00:01:00,100 --> 00:01:02,640
+which Vue offers out of the box.
+
+25
+00:01:02,640 --> 00:01:05,550
+You will learn what routing is in this course by the way,
+
+26
+00:01:05,550 --> 00:01:09,200
+and therefore React.js is very popular indeed.
+
+27
+00:01:09,200 --> 00:01:11,550
+But it actually also depends quite a bit
+
+28
+00:01:11,550 --> 00:01:16,530
+on community packages whereas Vue has everything built in.
+
+29
+00:01:16,530 --> 00:01:19,070
+Now, Angular is yet another Alternative,
+
+30
+00:01:19,070 --> 00:01:21,920
+yet another framework which you could use,
+
+31
+00:01:21,920 --> 00:01:25,130
+and it actually has a bit more features than Vue.
+
+32
+00:01:25,130 --> 00:01:27,270
+So it helps you with even more problems
+
+33
+00:01:27,270 --> 00:01:29,010
+that you could possibly have.
+
+34
+00:01:29,010 --> 00:01:33,550
+It's therefore especially popular in the enterprise world,
+
+35
+00:01:33,550 --> 00:01:37,100
+though big companies are using all three frameworks.
+
+36
+00:01:37,100 --> 00:01:39,390
+There are large companies using React,
+
+37
+00:01:39,390 --> 00:01:41,750
+there are large companies using Angular
+
+38
+00:01:41,750 --> 00:01:44,400
+and there are large companies using Vue.
+
+39
+00:01:44,400 --> 00:01:48,390
+And like Vue and also like React is component based,
+
+40
+00:01:48,390 --> 00:01:50,370
+it actually uses TypeScript.
+
+41
+00:01:50,370 --> 00:01:53,440
+Vue also supports this but it's optional.
+
+42
+00:01:53,440 --> 00:01:55,900
+In Angular, it's basically mandatory.
+
+43
+00:01:55,900 --> 00:01:57,370
+And for smaller projects,
+
+44
+00:01:57,370 --> 00:02:00,070
+you could say that Angular could be overkill
+
+45
+00:02:00,070 --> 00:02:01,617
+because of all its features,
+
+46
+00:02:01,617 --> 00:02:04,140
+but of course that always basically comes down
+
+47
+00:02:04,140 --> 00:02:06,750
+to personal preference, I would say.
+
+48
+00:02:06,750 --> 00:02:10,600
+In general, all three are very popular and used a lot.
+
+49
+00:02:10,600 --> 00:02:14,440
+Vue is a bit less popular amongst big companies
+
+50
+00:02:14,440 --> 00:02:17,600
+but there definitely are large companies using it.
+
+51
+00:02:17,600 --> 00:02:19,770
+And attached to this lecture,
+
+52
+00:02:19,770 --> 00:02:22,640
+you also find a more detailed comparison article
+
+53
+00:02:22,640 --> 00:02:24,140
+which you can dive into,
+
+54
+00:02:24,140 --> 00:02:26,510
+though you will get the most out of this article
+
+55
+00:02:26,510 --> 00:02:28,560
+if you come back to it later,
+
+56
+00:02:28,560 --> 00:02:30,590
+once you learn a bit more about Vue.
+
+57
+00:02:30,590 --> 00:02:33,230
+For now, it's enough to keep these Alternatives in mind
+
+58
+00:02:33,230 --> 00:02:37,060
+and then you can explore them once you know more about Vue.
+
+59
+00:02:37,060 --> 00:02:39,010
+Because good news also is,
+
+60
+00:02:39,010 --> 00:02:41,230
+that if you ever would want to switch
+
+61
+00:02:41,230 --> 00:02:42,670
+to a different alternative,
+
+62
+00:02:42,670 --> 00:02:45,120
+once you learned one of these three,
+
+63
+00:02:45,120 --> 00:02:47,870
+switching will be easier because whilst
+
+64
+00:02:47,870 --> 00:02:50,700
+they of course do have different code which you write,
+
+65
+00:02:50,700 --> 00:02:53,600
+they do have fairly similar concepts
+
+66
+00:02:53,600 --> 00:02:56,153
+and therefore switching isn't too hard.
+
+67
+00:02:57,217 --> 00:02:59,330
+Now these are the Vue Alternatives
+
+68
+00:02:59,330 --> 00:03:02,250
+and now that's enough of the theory I would say.
+
+69
+00:03:02,250 --> 00:03:04,550
+Why don't we now simply get started
+
+70
+00:03:04,550 --> 00:03:06,160
+by writing some Vue code
+
+71
+00:03:06,160 --> 00:03:09,763
+and getting a first feeling for how Vue works.
+

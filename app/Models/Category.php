@@ -13,4 +13,8 @@ class Category extends Model
     public function courses(){
         return $this->hasMany(Course::class);
     }
+    public function tags()
+    {
+        return $this->hasMany(Tag::class);
+    }
 }

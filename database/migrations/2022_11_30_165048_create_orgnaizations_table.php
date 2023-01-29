@@ -19,9 +19,11 @@ return new class extends Migration
             $table->string('username')->unique();
             $table->string('phone')->unique();
             $table->string('email')->unique();
-            $table->enum('status', ['active', 'pending', 'deleted'])->default('pending');
+            $table->enum('status', ['active', 'pending', 'deleted'])->default('active');
             $table->foreignId('country_id')->nullable()->constrained('countries')->nullOnDelete();
-            $table->foreignId('city_id')->nullable()->constrained('cities')->nullOnDelete();
+            // $table->foreignId('city_id')->nullable()->constrained('cities')->nullOnDelete();
+            $table->string('image')->default('/Avatar.jpj');
+            $table->text('description')->nullable();
             $table->unsignedBigInteger('subscriptions')->default(0);
             $table->string('password');
             $table->timestamp('email_verified_at')->nullable();

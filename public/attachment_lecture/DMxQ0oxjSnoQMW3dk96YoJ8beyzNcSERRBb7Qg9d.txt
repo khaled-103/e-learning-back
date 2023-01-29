@@ -1,0 +1,216 @@
+1
+00:00:02,130 --> 00:00:05,450
+So, now you have a rough idea of what Vue is
+
+2
+00:00:05,450 --> 00:00:07,880
+and why you might want to use it.
+
+3
+00:00:07,880 --> 00:00:10,920
+In case you're not fully convinced yet, no worries.
+
+4
+00:00:10,920 --> 00:00:14,170
+We'll see it all in action very soon.
+
+5
+00:00:14,170 --> 00:00:16,570
+There is one important thing to realize
+
+6
+00:00:16,570 --> 00:00:19,230
+about using Vue, though.
+
+7
+00:00:19,230 --> 00:00:24,230
+We can use Vue in two main ways, you could say.
+
+8
+00:00:24,320 --> 00:00:28,980
+We can use it to control parts of an HTML page
+
+9
+00:00:28,980 --> 00:00:32,900
+and make that part a bit more reactive and interactive.
+
+10
+00:00:32,900 --> 00:00:34,150
+So, we could, for example,
+
+11
+00:00:34,150 --> 00:00:37,290
+control the sidebar on a page
+
+12
+00:00:37,290 --> 00:00:39,680
+to load elements there dynamically,
+
+13
+00:00:39,680 --> 00:00:41,780
+or we have a chat overlay,
+
+14
+00:00:41,780 --> 00:00:43,280
+which the user can open up
+
+15
+00:00:43,280 --> 00:00:46,440
+and that chat overlay is controlled by Vue.
+
+16
+00:00:46,440 --> 00:00:49,750
+So, we don't have to control everything on the page with it.
+
+17
+00:00:49,750 --> 00:00:52,410
+We don't have to use Vue for everything on a page
+
+18
+00:00:52,410 --> 00:00:54,680
+if we don't have any reactivity.
+
+19
+00:00:54,680 --> 00:00:57,530
+If we don't need an interactive element somewhere
+
+20
+00:00:57,530 --> 00:01:00,520
+on our screen, we don't have to use Vue for it.
+
+21
+00:01:00,520 --> 00:01:04,860
+And we can therefore use Vue to build so-called Widgets.
+
+22
+00:01:04,860 --> 00:01:06,930
+And that's not a general term,
+
+23
+00:01:06,930 --> 00:01:09,190
+that's just a term I came up with.
+
+24
+00:01:09,190 --> 00:01:12,920
+We control parts of a page by dumping in small Widgets,
+
+25
+00:01:12,920 --> 00:01:15,760
+like a chat screen, like a interactive sidebar,
+
+26
+00:01:15,760 --> 00:01:18,110
+and other parts on the page are totally
+
+27
+00:01:18,110 --> 00:01:20,453
+not affected by Vue.
+
+28
+00:01:21,580 --> 00:01:25,000
+The opposite, the other way of using Vue
+
+29
+00:01:25,000 --> 00:01:26,810
+would be that everything
+
+30
+00:01:26,810 --> 00:01:29,640
+on a page is controlled with Vue.
+
+31
+00:01:29,640 --> 00:01:33,810
+So, every element is rendered and controlled by Vue.
+
+32
+00:01:33,810 --> 00:01:37,310
+This is the so-called Single-Page-Application approach
+
+33
+00:01:37,310 --> 00:01:41,510
+where the server only ever sends one HTML page,
+
+34
+00:01:41,510 --> 00:01:44,550
+which includes basically no markup,
+
+35
+00:01:44,550 --> 00:01:47,710
+but all the script imports we need importing Vue
+
+36
+00:01:47,710 --> 00:01:49,430
+and our Vue code.
+
+37
+00:01:49,430 --> 00:01:52,080
+And thereafter, our Vue code defines
+
+38
+00:01:52,080 --> 00:01:54,310
+what should be rendered on the screen
+
+39
+00:01:54,310 --> 00:01:57,750
+in the browser after the page was loaded.
+
+40
+00:01:57,750 --> 00:01:59,680
+Now, there also are some mixtures,
+
+41
+00:01:59,680 --> 00:02:01,730
+but you will learn all about that,
+
+42
+00:02:01,730 --> 00:02:03,950
+all about those two approaches
+
+43
+00:02:03,950 --> 00:02:06,320
+in great detail throughout the course.
+
+44
+00:02:06,320 --> 00:02:08,500
+We're going to start with the left approach
+
+45
+00:02:08,500 --> 00:02:11,100
+because that's easier to get into Vue,
+
+46
+00:02:11,100 --> 00:02:13,390
+but we'll then also move to the other approach,
+
+47
+00:02:13,390 --> 00:02:16,000
+to the everything is controlled by Vue approach
+
+48
+00:02:16,000 --> 00:02:17,560
+so that by the end of the course,
+
+49
+00:02:17,560 --> 00:02:20,670
+you feel comfortable using either of the two approaches
+
+50
+00:02:20,670 --> 00:02:24,000
+and you will also know when to use which approach
+
+51
+00:02:24,000 --> 00:02:26,700
+because it turns out, there is no better approach.
+
+52
+00:02:26,700 --> 00:02:30,160
+These approaches are simply good for different things.
+
+53
+00:02:30,160 --> 00:02:31,260
+And throughout the course,
+
+54
+00:02:31,260 --> 00:02:33,623
+this will become very, very clear.
+

@@ -30,8 +30,8 @@ trait GeneralTrait
 
 
     public function checkTokenInfo(Request $request){
-        $token = PersonalToken::findOrFail($request->token['id']);
-        if(Hash::check($request->token['returnedToken'], $token->token)/*check tokenable id tokenable type*/){
+        $token = PersonalToken::findOrFail(is_array($request->token) ? $request->token['id'] : json_decode( $request->token)->id);
+        if(Hash::check(is_array($request->token) ? $request->token['returnedToken'] : json_decode( $request->token)->returnedToken, $token->token)/*check tokenable id tokenable type*/){
             return $this->returnSuccessMessage("token checked done");
         }
         return $this->returnError(422,'token checked fail');
