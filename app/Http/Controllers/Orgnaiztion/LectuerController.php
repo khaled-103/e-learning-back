@@ -50,6 +50,7 @@ class LectuerController extends Controller
         $type_file = '';
         $file_name='';
         $duration='00:00';
+        $sec=0;
         if ($request->hasFile('lecture')) {
             $file = $request->file('lecture');
             $extention_file = $file->getClientOriginalExtension();
@@ -59,6 +60,7 @@ class LectuerController extends Controller
                 $lecture_path = $file->store('/', ['disk' => 'Video_lecture']);
                 $track = new GetId3($request->file('lecture'));
                 $duration =  $track->getPlaytime();
+                $sec = $track->getPlaytimeSeconds();
             } else {
                 $type_file = 'attachment';
                 $lecture_path = $file->store('/', ['disk' => 'Attachment_lecture']);
@@ -75,6 +77,13 @@ class LectuerController extends Controller
         ]);
 
         if ($lecture) {
+            $section = Section::find($request->section_id);
+            $course = Course::find($section->course_id);
+            $lecturesNumber = $course->lectures_number;
+            $course->update([
+                'course_duration' =>  $course->course_duration + $sec,
+                'lectures_number' => ++$lecturesNumber,
+            ]);
             return $this->returnData('lecture', $lecture, 'get lectuers success');
         } else
             return $this->returnError(429, 'something wrong!!');

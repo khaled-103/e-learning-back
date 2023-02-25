@@ -1,0 +1,700 @@
+1
+00:00:02,180 --> 00:00:04,860
+So now that we have basic idea
+
+2
+00:00:04,860 --> 00:00:07,310
+of why we might wanna use Vue,
+
+3
+00:00:07,310 --> 00:00:09,470
+let's indeed jump into Vue
+
+4
+00:00:09,470 --> 00:00:12,690
+and its basics and its core syntax.
+
+5
+00:00:12,690 --> 00:00:14,320
+And for that I got a very, very,
+
+6
+00:00:14,320 --> 00:00:17,570
+very simple starting project if you wanna call
+
+7
+00:00:17,570 --> 00:00:19,750
+it like this, a simple webpage,
+
+8
+00:00:19,750 --> 00:00:22,720
+which you of course find attached to this lecture
+
+9
+00:00:22,720 --> 00:00:25,760
+so that you can start with the same project.
+
+10
+00:00:25,760 --> 00:00:28,090
+Now I opened it here in a browser simply
+
+11
+00:00:28,090 --> 00:00:33,090
+by double-clicking .html file side by side with my editor,
+
+12
+00:00:33,460 --> 00:00:36,450
+just so that it's a bit easier to see what changes
+
+13
+00:00:36,450 --> 00:00:39,430
+on the page once we started writing some code.
+
+14
+00:00:39,430 --> 00:00:41,000
+Now, speaking of code,
+
+15
+00:00:41,000 --> 00:00:43,240
+this is a very simple starting project.
+
+16
+00:00:43,240 --> 00:00:47,043
+If I briefly hide this sidebar here,
+
+17
+00:00:47,900 --> 00:00:51,630
+also with the shortcut, you see the HTML skeleton
+
+18
+00:00:51,630 --> 00:00:54,550
+is very simple, I just got a header,
+
+19
+00:00:54,550 --> 00:00:58,470
+got a section and h2 tag and that empty paragraph tag,
+
+20
+00:00:58,470 --> 00:01:01,570
+and I got to import, where I import Vue,
+
+21
+00:01:01,570 --> 00:01:03,910
+so the Vue framework,
+
+22
+00:01:03,910 --> 00:01:07,140
+and I got to import to my own app JS file
+
+23
+00:01:07,140 --> 00:01:12,100
+and also imports to some Google fonts and my own CSS file.
+
+24
+00:01:12,100 --> 00:01:14,610
+Now the CSS file is not too important,
+
+25
+00:01:14,610 --> 00:01:18,210
+it has some basic styles, but this is not a CSS course,
+
+26
+00:01:18,210 --> 00:01:20,590
+so I won't bore you with those.
+
+27
+00:01:20,590 --> 00:01:22,860
+I do have a separate CSS course
+
+28
+00:01:22,860 --> 00:01:24,630
+if you wanna learn more about that,
+
+29
+00:01:24,630 --> 00:01:28,190
+instead, let's focus on JavaScript and Vue.
+
+30
+00:01:28,190 --> 00:01:31,720
+And here the JavaScript file is totally empty.
+
+31
+00:01:31,720 --> 00:01:33,630
+Now here's one thing I'll do,
+
+32
+00:01:33,630 --> 00:01:35,910
+and I'll not do this throughout the entire course,
+
+33
+00:01:35,910 --> 00:01:37,990
+but I'll do it here at the beginning.
+
+34
+00:01:37,990 --> 00:01:41,490
+I'll change the editor layout here in visual studio code
+
+35
+00:01:41,490 --> 00:01:46,270
+to use two rows and I'll open the index HTML file
+
+36
+00:01:46,270 --> 00:01:50,010
+in the top row and the app JS file in the bottom row
+
+37
+00:01:50,010 --> 00:01:52,090
+and close to sidebar.
+
+38
+00:01:52,090 --> 00:01:53,940
+I'm doing this because this will allow me
+
+39
+00:01:53,940 --> 00:01:56,460
+to show you how our JavaScript code
+
+40
+00:01:56,460 --> 00:01:59,820
+and the HTML code interacts later once
+
+41
+00:01:59,820 --> 00:02:02,240
+we ride more complex JavaScript code,
+
+42
+00:02:02,240 --> 00:02:05,430
+I'll move away from this setup so that we can see
+
+43
+00:02:05,430 --> 00:02:07,530
+the JavaScript code on the entire page,
+
+44
+00:02:07,530 --> 00:02:10,580
+but to get started, this will be just fine.
+
+45
+00:02:10,580 --> 00:02:12,910
+So with that, we've got the HTML code,
+
+46
+00:02:12,910 --> 00:02:14,920
+we got the JavaScript code.
+
+47
+00:02:14,920 --> 00:02:17,610
+Now the first thing we wanna do
+
+48
+00:02:17,610 --> 00:02:20,140
+when we wanna use some Vue features
+
+49
+00:02:20,140 --> 00:02:24,050
+is we want to connect Vue to our HTML code.
+
+50
+00:02:24,050 --> 00:02:29,050
+We wanna let Vue know which part off this HTML code
+
+51
+00:02:29,240 --> 00:02:31,420
+should be controlled by Vue.
+
+52
+00:02:31,420 --> 00:02:35,650
+Because we'll only be able to utilize Vue
+
+53
+00:02:35,650 --> 00:02:38,870
+in parts that are controlled by Vue.
+
+54
+00:02:38,870 --> 00:02:41,620
+Now here, my first goal is very simple.
+
+55
+00:02:41,620 --> 00:02:43,700
+I got this dummy webpage,
+
+56
+00:02:43,700 --> 00:02:48,480
+where I wanna output my course goal or your course goal.
+
+57
+00:02:48,480 --> 00:02:51,630
+Something like finished course Master Vue,
+
+58
+00:02:51,630 --> 00:02:52,910
+anything like that.
+
+59
+00:02:52,910 --> 00:02:55,840
+Now, of course we can just write that in here
+
+60
+00:02:55,840 --> 00:02:59,060
+and we're done, but this course is about Vue
+
+61
+00:02:59,060 --> 00:03:01,640
+and whilst controlling this with Vue
+
+62
+00:03:01,640 --> 00:03:03,820
+and outputting this text with Vue
+
+63
+00:03:03,820 --> 00:03:06,200
+will be a bit over killed for now.
+
+64
+00:03:06,200 --> 00:03:09,440
+It is good to get started with a basic example like that,
+
+65
+00:03:09,440 --> 00:03:13,120
+so did we can later also explore more advanced examples.
+
+66
+00:03:13,120 --> 00:03:15,980
+Therefore let's not output this text like this,
+
+67
+00:03:15,980 --> 00:03:19,600
+but let's instead use Vue to output some texts here,
+
+68
+00:03:19,600 --> 00:03:23,610
+some texts which we potentially could change dynamically.
+
+69
+00:03:23,610 --> 00:03:25,910
+And for that, the first thing we need to do
+
+70
+00:03:25,910 --> 00:03:28,470
+is we need to create a Vue App.
+
+71
+00:03:28,470 --> 00:03:31,340
+This is always the first step you wanna control
+
+72
+00:03:31,340 --> 00:03:35,020
+a part of your HTML code with a Vue App.
+
+73
+00:03:35,020 --> 00:03:37,910
+And you do this by using Vue,
+
+74
+00:03:37,910 --> 00:03:40,410
+which is a globally available object,
+
+75
+00:03:40,410 --> 00:03:42,960
+thanks to this Vue import.
+
+76
+00:03:42,960 --> 00:03:47,500
+And then on this Vue object, we can call createApp.
+
+77
+00:03:47,500 --> 00:03:49,130
+And this will do what the name applies.
+
+78
+00:03:49,130 --> 00:03:50,963
+It creates a Vue App.
+
+79
+00:03:51,810 --> 00:03:54,770
+And we can store does app in a variable or constant.
+
+80
+00:03:54,770 --> 00:03:56,690
+So here all stored in that constant.
+
+81
+00:03:56,690 --> 00:03:59,130
+And this is a default JavaScript feature
+
+82
+00:03:59,130 --> 00:04:01,150
+has nothing to do with Vue.
+
+83
+00:04:01,150 --> 00:04:06,150
+And now we want to let Vue know which part of this HTML code
+
+84
+00:04:07,400 --> 00:04:10,360
+should be controlled by that Vue App.
+
+85
+00:04:10,360 --> 00:04:14,400
+Now, I wanna control this section because it's this section
+
+86
+00:04:14,400 --> 00:04:16,370
+which contains this paragraph,
+
+87
+00:04:16,370 --> 00:04:19,160
+which I wanna manipulate through Vue.
+
+88
+00:04:19,160 --> 00:04:22,060
+We could also just control this paragraph,
+
+89
+00:04:22,060 --> 00:04:25,390
+but we will later add more features inside of this section,
+
+90
+00:04:25,390 --> 00:04:27,930
+hence, I'll take the entire section.
+
+91
+00:04:27,930 --> 00:04:30,690
+Now we do that by calling Mount,
+
+92
+00:04:30,690 --> 00:04:34,090
+the Mount method on this app object
+
+93
+00:04:34,090 --> 00:04:36,033
+which we created with createApp.
+
+94
+00:04:37,240 --> 00:04:39,780
+Mount now wants a string.
+
+95
+00:04:39,780 --> 00:04:43,730
+And that string should hold a CSS selector,
+
+96
+00:04:43,730 --> 00:04:47,440
+which uniquely identifies the element
+
+97
+00:04:47,440 --> 00:04:51,223
+in our DOM in our HTML code, which we wanna control.
+
+98
+00:04:52,100 --> 00:04:55,500
+Now here, this section has an ID of user goal.
+
+99
+00:04:55,500 --> 00:04:56,850
+So we can use this ID.
+
+100
+00:04:56,850 --> 00:04:59,100
+And typically you will use IDs
+
+101
+00:04:59,100 --> 00:05:01,030
+because you want a unique selector,
+
+102
+00:05:01,030 --> 00:05:03,230
+and IDs are great unique selectors
+
+103
+00:05:03,230 --> 00:05:06,700
+because IDs should be unique on your page.
+
+104
+00:05:06,700 --> 00:05:09,840
+Now, how does such an ID selector look like?
+
+105
+00:05:09,840 --> 00:05:13,150
+Well, it's simply a hash symbol and then your ID
+
+106
+00:05:13,150 --> 00:05:14,800
+in this case user goal.
+
+107
+00:05:14,800 --> 00:05:16,720
+And this will tell you that we want
+
+108
+00:05:16,720 --> 00:05:20,730
+to connect our creative Vue App to this section
+
+109
+00:05:20,730 --> 00:05:21,993
+in the HTML code.
+
+110
+00:05:23,530 --> 00:05:26,350
+Now, if we safety app JS file,
+
+111
+00:05:26,350 --> 00:05:28,150
+disconnection is established.
+
+112
+00:05:28,150 --> 00:05:30,500
+But the connection alone doesn't do much.
+
+113
+00:05:30,500 --> 00:05:33,980
+Instead, we can now use Vue features to interact
+
+114
+00:05:33,980 --> 00:05:35,740
+with this control section.
+
+115
+00:05:35,740 --> 00:05:36,832
+And we do use such features
+
+116
+00:05:36,832 --> 00:05:40,833
+by passing an object to createApp.
+
+117
+00:05:41,710 --> 00:05:46,150
+This is an object which we can use to configure this app.
+
+118
+00:05:46,150 --> 00:05:50,940
+We configure the various options of this app, you could say.
+
+119
+00:05:50,940 --> 00:05:55,940
+Now one key option, which we can set is the data option,
+
+120
+00:05:56,960 --> 00:05:58,860
+the data configuration.
+
+121
+00:05:58,860 --> 00:06:01,040
+And this name is not up to you.
+
+122
+00:06:01,040 --> 00:06:02,810
+It has to be data.
+
+123
+00:06:02,810 --> 00:06:06,920
+You can use some clearly defined specific keys.
+
+124
+00:06:06,920 --> 00:06:09,700
+So property names in this object
+
+125
+00:06:09,700 --> 00:06:11,410
+which you pass to createApp.
+
+126
+00:06:11,410 --> 00:06:13,900
+You cannot just use any arbitrary names
+
+127
+00:06:13,900 --> 00:06:17,500
+because the Vue will look for these specific property names
+
+128
+00:06:17,500 --> 00:06:20,320
+like data, and a couple of other names you'll see
+
+129
+00:06:20,320 --> 00:06:21,470
+throughout this course.
+
+130
+00:06:22,390 --> 00:06:24,060
+So here we get the data key.
+
+131
+00:06:24,060 --> 00:06:28,300
+Data, once a function as a value.
+
+132
+00:06:28,300 --> 00:06:30,360
+So we could provide one like this,
+
+133
+00:06:30,360 --> 00:06:32,300
+and that would be totally valid,
+
+134
+00:06:32,300 --> 00:06:35,490
+or we use the method shorthand which we can use
+
+135
+00:06:35,490 --> 00:06:38,400
+in modern JavaScript, which is supported here.
+
+136
+00:06:38,400 --> 00:06:40,800
+And that looks like that, it's the same.
+
+137
+00:06:40,800 --> 00:06:42,970
+It basically means the values stored
+
+138
+00:06:42,970 --> 00:06:45,900
+in the data property is a function.
+
+139
+00:06:45,900 --> 00:06:47,940
+Now what should this function do?
+
+140
+00:06:47,940 --> 00:06:52,080
+It should do one very simple yet important thing.
+
+141
+00:06:52,080 --> 00:06:56,810
+It returns an object and always an object.
+
+142
+00:06:56,810 --> 00:07:01,520
+Not an array, not a number, not a string, always an object.
+
+143
+00:07:01,520 --> 00:07:03,950
+And in this returned object,
+
+144
+00:07:03,950 --> 00:07:08,440
+you can now set up any key value pairs with any key
+
+145
+00:07:08,440 --> 00:07:11,950
+so with any property names off your choice.
+
+146
+00:07:11,950 --> 00:07:16,950
+Something like message or course goal totally up to you.
+
+147
+00:07:17,300 --> 00:07:19,380
+And the values for those properties
+
+148
+00:07:19,380 --> 00:07:21,480
+are also totally up to you.
+
+149
+00:07:21,480 --> 00:07:23,470
+Here I'm going to store a string,
+
+150
+00:07:23,470 --> 00:07:25,880
+but you could store anything that makes sense
+
+151
+00:07:25,880 --> 00:07:29,280
+for your use case for your application.
+
+152
+00:07:29,280 --> 00:07:30,670
+You could store a boolean,
+
+153
+00:07:30,670 --> 00:07:32,000
+you could store a number,
+
+154
+00:07:32,000 --> 00:07:35,210
+you could store an array or yet another object.
+
+155
+00:07:35,210 --> 00:07:37,310
+But here I want a simple string,
+
+156
+00:07:37,310 --> 00:07:41,483
+my course goal could be finish the course and learn Vue.
+
+157
+00:07:43,030 --> 00:07:44,510
+Now what's the idea behind this?
+
+158
+00:07:44,510 --> 00:07:47,770
+What's the idea behind this data property,
+
+159
+00:07:47,770 --> 00:07:51,770
+which we now configured in this Vue App?
+
+160
+00:07:51,770 --> 00:07:55,670
+Well, anything that's part of the object you return
+
+161
+00:07:55,670 --> 00:08:00,670
+in data, can now be used in your Vue controlled HTML part.
+
+162
+00:08:02,800 --> 00:08:06,350
+And whilst this is not too exciting for static content,
+
+163
+00:08:06,350 --> 00:08:09,030
+which never changes, like our string here,
+
+164
+00:08:09,030 --> 00:08:10,670
+this will be super awesome,
+
+165
+00:08:10,670 --> 00:08:13,530
+as soon as we add some reactivity
+
+166
+00:08:13,530 --> 00:08:17,320
+and we for example react to the user clicking a button
+
+167
+00:08:17,320 --> 00:08:18,900
+to then change data.
+
+168
+00:08:18,900 --> 00:08:22,360
+You got a first glimpse at that in the first course module,
+
+169
+00:08:22,360 --> 00:08:25,370
+and you'll see way more of that for all the course.
+
+170
+00:08:25,370 --> 00:08:26,830
+But to start simple,
+
+171
+00:08:26,830 --> 00:08:29,573
+we can output what's stored in course goal
+
+172
+00:08:29,573 --> 00:08:32,789
+in this Vue Control HTML part by using
+
+173
+00:08:32,789 --> 00:08:34,620
+a special syntax here.
+
+174
+00:08:34,620 --> 00:08:36,919
+A special syntax, which will only work
+
+175
+00:08:36,919 --> 00:08:38,823
+because this is controlled by Vue.
+

@@ -17,4 +17,9 @@ class Lecture extends Model
     {
         return $this->belongsTo(Section::class);
     }
+    public function getLecturePathAttribute(){
+        if($this->attributes['type'] == 'video')
+            return asset('video_lecture/'.$this->attributes['lecture_path']);
+        return asset('attachment_lecture/'.$this->attributes['lecture_path']);
+    }
 }
