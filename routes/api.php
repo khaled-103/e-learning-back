@@ -101,6 +101,9 @@ Route::middleware('checkPassword')->group(function () {
         return response()->json(Tag::select(['name'])->get());
     });
     Route::post('/checkUserPayStatus',[CourseController::class,'checkUserPayStatus']);
+    Route::post('/checkStripeReturn',[PaymentController::class,'checkStripeReturn']);
+    Route::post('/enrollCourseFree',[PaymentController::class,'enrollCourseFree']);
+
 });
 Route::post('/payment/createPaymentIntent',[PaymentController::class,'createPaymentIntent']);
 Route::post('store/description-images', function (Request $request) {
