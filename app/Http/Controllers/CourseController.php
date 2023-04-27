@@ -16,17 +16,28 @@ use App\Models\Status;
 use App\Models\Subscribe;
 use App\Models\Tag;
 use App\Traits\GeneralTrait;
+use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Nette\Utils\Json;
 use Owenoj\LaravelGetId3\GetId3;
 
 
 class CourseController extends Controller
 {
     use GeneralTrait;
+
+    public function test(Request $request)
+    {
+        $lecture = Lecture::latest()->first();
+
+        return $this->returnData('lects',$lecture);
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -59,6 +70,11 @@ class CourseController extends Controller
         $subCategories = Category::whereNotNull('parent_id')->get();
         return $this->returnData('subCategories', $subCategories, 'get SubCategories success');
     }
+    public function getAllCategories()
+    {
+        $allCategories = Category::all(['id', 'name', 'parent_id']);
+        return $this->returnData('allCategories', $allCategories, 'get allCategories success');
+    }
 
     public function getSelectedOrgCategories(Request $request)
     {
@@ -71,6 +87,18 @@ class CourseController extends Controller
         $categories = DB::table('orgnaization_categories')->where('orgnaization_id', $request->id)
             ->select('categories_id')->get();
         return $this->returnData('categories', $categories, 'get selected categories success');
+    }
+
+    public function getCoursesInCategory(Request $request)
+    {
+        $courses = Course::with(['rating:range_rate,numOfRate,course_id', 'language:id,language'])->where('category_id', $request->categoryId)->get();
+        return $this->returnData('courses', $courses, '');
+        // $courses = DB::select("SELECT courses.id ,courses.slug  ,courses.image, courses.name as courseName , courses.price ,courses.category_id , rate.range_rate , rate.numOfRate , org.name as orgName
+        //     from courses left  join rating_courses as rate on courses.id = rate.course_id
+        //     left join orgnaizations as org on courses.oranization_id = org.id
+        //     and courses.category_id = $request->categoryId
+        //     order by rate.numOfRate * rate.range_rate desc");
+        // return $this->returnData('courses', $courses);
     }
 
 
@@ -90,11 +118,7 @@ class CourseController extends Controller
     }
 
 
-    public function test(Request $request)
-    {
-        $track = new GetId3($request->file('file'));
-        return $track->getPlaytime();
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -103,7 +127,18 @@ class CourseController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-
+    public function upload(Request $request){
+        $video_path = null;
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            if ($file->isValid()) {
+                $video_path = $file->store('/', [
+                    'disk' => 'Video_lecture'
+                ]);
+            }
+        }
+        return response()->json(['path' => $video_path]);
+    }
     public function store(Request $request)
     {
         $Validator = Validator::make($request->all(), [
@@ -169,7 +204,7 @@ class CourseController extends Controller
             'image' => $image_path,
             'video' => $video_path,
             'level' => $request->level,
-            'oranization_id' => 1, //json_decode($request->token)->tokenable_id,
+            'oranization_id' => json_decode($request->token)->tokenable_id,
             'language_id' => $request->language_id,
             'category_id' => $request->category_id,
             'teacher' => $request->teacher,
@@ -476,7 +511,7 @@ class CourseController extends Controller
     public function getCourseContent(Request $request)
     {
         //check token and it enroll this course
-        $course = Course::where('slug', $request->course_slug)->select(['id','name'])->first();
+        $course = Course::where('slug', $request->course_slug)->select(['id', 'name', 'course_duration'])->first();
         $sections = Section::where('course_id', $course->id)->with('lectures')->get();
         return $this->returnData('courseContent', ['course' => $course, 'sections' => $sections], 'get course content successfully');
     }
@@ -515,7 +550,7 @@ class CourseController extends Controller
             order by rand() limit 15", $intersted);
 
 
-        $topCat = DB::select("SELECT cat.id , cat.name
+        $topCat = DB::select("SELECT cat.id , cat.name ,count(courses.id)
             from courses left join categories as cat on courses.category_id = cat.id
             Group by courses.category_id
             order by count(courses.id) desc
@@ -541,6 +576,30 @@ class CourseController extends Controller
         ]);
         // return $this->returnData('higthestRate',$higthestRate ,'');
     }
+
+
+
+
+
+
+    public function myLearningGetItems(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required|exists:users,id',
+        ]);
+        if ($validator->fails()) {
+            return $this->returnValidationError('validation error occur', $validator->errors());
+        }
+        $course_id = CourseRegistration::where('user_id', $request->user_id)->get('course_id');
+        $result = Course::with('rating:range_rate,numOfRate,course_id')->find($course_id);
+
+        return $this->returnData('result', $result, 'get My Learning items successfully');
+    }
+
+
+
+
+
     public function search(Request $request)
     {
         $course = Course::with(['rating:range_rate,numOfRate,course_id', 'language:id,language'])->where('name', 'like', '%' . $request->name . '%')->orWhere('subtitle', 'like', '%' . $request->name . '%')
@@ -549,12 +608,13 @@ class CourseController extends Controller
     }
 
 
-    public function checkUserPayStatus(Request $request){
-        $id = Course::where('slug',$request->course_slug)->first()->id;
-        $res = CourseRegistration::where('user_id',$request->user_id)->where('course_id',$id)->first();
-        if($res){
-            return $this->returnData('userStatus','register');
+    public function checkUserPayStatus(Request $request)
+    {
+        $id = Course::where('slug', $request->course_slug)->first()->id;
+        $res = CourseRegistration::where('user_id', $request->user_id)->where('course_id', $id)->first();
+        if ($res) {
+            return $this->returnData('userStatus', 'register');
         }
-        return $this->returnData('userStatus','not register');
+        return $this->returnData('userStatus', 'not register');
     }
 }

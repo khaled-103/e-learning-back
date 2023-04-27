@@ -6,6 +6,7 @@ use App\Models\Orgnaization;
 use App\Models\PersonalToken;
 use App\Models\User;
 use App\Models\verificationCode;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -111,20 +112,25 @@ trait AuthTrait
     {
         $token = fake()->uuid();
         $hashToken = Hash::make($token);
+
         $tokenInfo = PersonalToken::where('tokenable_id', $id)
             ->where('tokenable_type', $type)
             ->first();
-        if ($tokenInfo) {
-            $tokenInfo->update([
-                'token' => $hashToken
-            ]);
-        } else {
-            $tokenInfo = PersonalToken::create([
-                'tokenable_type' => $type,
-                'tokenable_id' => $id,
-                'token' => $hashToken
-            ]);
-        }
+        // if ($tokenInfo) {
+        //     $expiresAt = Carbon::parse($tokenInfo->expires_at);
+        //     $isExpired = $expiresAt->isPast();
+        //     if ($isExpired) {
+        //         $tokenInfo->update([
+        //             'token' => $hashToken
+        //         ]);
+        //     }
+        // } else {
+        $tokenInfo = PersonalToken::create([
+            'tokenable_type' => $type,
+            'tokenable_id' => $id,
+            'token' => $hashToken
+        ]);
+        // }
         $tokenInfo['returnedToken'] = $token;
         return $tokenInfo;
     }

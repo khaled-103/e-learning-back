@@ -13,16 +13,14 @@ class Course extends Model
     protected $hidden = ['pivot'];
     protected $appends = ['duration'];
     public function getDurationAttribute(){
-        return 0;
-        // $seconds = $this->attributes['course_duration'];
-        // return $seconds;
-        // $min = $seconds / 60;
-        // if ($min < 60) {
-        //     return $min == 1 ? "$min minute" : floor($min) . " minutes";
-        // } else {
-        //     $hours = round($min / 60, 1);
-        //     return $hours == 1 ? "$hours hour" : "$hours hours";
-        // }
+        $seconds = $this->course_duration;
+        $min = $seconds / 60;
+        if ($min < 60) {
+            return $min == 1 ? "$min minute" : floor($min) . " minutes";
+        } else {
+            $hours = round($min / 60, 1);
+            return $hours == 1 ? "$hours hour" : "$hours hours";
+        }
     }
 
     public function category()

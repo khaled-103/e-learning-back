@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DetailCourseController;
 use App\Http\Controllers\Orgnaiztion\Auth\AuthOrgController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\Orgnaiztion\OrgProfileController;
 use App\Http\Controllers\Orgnaiztion\SectionController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\UserCourseController;
+use App\Http\Controllers\WishlistController;
 use App\Models\CourseQuestion;
 use App\Models\Tag;
 use Illuminate\Http\Request;
@@ -25,7 +27,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
+Route::post('/upload', [CourseController::class, 'upload']);
+Route::post('/getLanguages', [CourseController::class, 'getLanguages']);
 Route::middleware('checkPassword')->group(function () {
     Route::post('/user/register', [AuthController::class, 'register']);
     Route::post('/user/login', [AuthController::class, 'login']);
@@ -54,7 +57,6 @@ Route::middleware('checkPassword')->group(function () {
 
 
 
-    Route::post('/getLanguages', [CourseController::class, 'getLanguages']);
     Route::post('/getCategories', [CourseController::class, 'getCategories']);
     Route::post('/getSubCategories', [CourseController::class, 'getSubCategories']);
     Route::post('/getSelectedOrgCategories', [CourseController::class, 'getSelectedOrgCategories']);
@@ -103,10 +105,28 @@ Route::middleware('checkPassword')->group(function () {
     Route::post('/checkUserPayStatus',[CourseController::class,'checkUserPayStatus']);
     Route::post('/checkStripeReturn',[PaymentController::class,'checkStripeReturn']);
     Route::post('/enrollCourseFree',[PaymentController::class,'enrollCourseFree']);
+    Route::post('/cancleOrder',[PaymentController::class,'cancleOrder']);
+    Route::post('/getInitOrderInfo',[PaymentController::class,'getInitOrderInfo']);
+    Route::post('/createNewOrder',[PaymentController::class,'createNewOrder']);
 
+
+    Route::post('/homePage/getAllCategories',[CourseController::class,'getAllCategories']);
+    Route::post('/homePage/getCoursesInCategory',[CourseController::class,'getCoursesInCategory']);
+
+    Route::post('/addCourseInCart',[CartController::class,'addCourseInCart']);
+    Route::post('/getItemsCart',[CartController::class,'getItemsCart']);
+    Route::post('/removeCourseFromCart',[CartController::class,'removeCourseFromCart']);
+    Route::post('/removeAllItemsFromCart',[CartController::class,'removeAllItemsFromCart']);
+    Route::post('/checkCourseInCart',[CartController::class,'checkCourseInCart']);
+    Route::post('/cartCheckOut',[PaymentController::class,'cartCheckOut']);
+    Route::post('wishlist/add', [WishlistController::class, 'store']);
+    Route::post('wishlist/check', [WishlistController::class, 'check']);
+    Route::post('wishlist/delete', [WishlistController::class, 'delete']);
+    Route::post('wishlist/wishlistItems', [WishlistController::class, 'getItems']);
+    Route::post('mylearning/getItems', [CourseController::class, 'myLearningGetItems']);
 });
 Route::post('/payment/createPaymentIntent',[PaymentController::class,'createPaymentIntent']);
-Route::post('store/description-images', function (Request $request) {
+Route::post('/store/description-images', function (Request $request) {
     $image = $request->file('upload');
     $filename = time() . '.' . $image->getClientOriginalExtension();
     $path = $image->move(public_path('description_images'), $filename);
@@ -118,3 +138,7 @@ Route::post('store/description-images', function (Request $request) {
 });
 Route::post('/testEmail', [AuthController::class, 'testEmail']);
 Route::post('/test', [CourseController::class, 'test']);
+
+
+
+

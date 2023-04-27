@@ -42,7 +42,8 @@ class testCourseSeeder extends Seeder
                 'teacher' => 'Ahmed',
                 'video' => 'ttt.mp4',
                 'requirements' => '"some requirements"',
-                'objectives' => '"some objectives"'
+                'objectives' => '"some objectives"',
+                'course_duration' => fake()->numberBetween(3600,100000)
             ]);
             if ($course) {
                 RatingCourse::create([

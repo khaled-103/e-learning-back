@@ -112,7 +112,7 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        $token = PersonalToken::findOrFail($request->token['id']);
+        $token = PersonalToken::where('id',$request->token['id'])->where('tokenable_id',$request->token['tokenable_id'])->first();
         $token->delete();
         return $this->returnSuccessMessage('Logout successful');
     }
